@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
     - name: run command
       run: echo Hello
-    runs-on: ubuntu-latests
