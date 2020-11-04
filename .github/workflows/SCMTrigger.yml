@@ -7,6 +7,7 @@ on:
     - release/pino*
   schedule:
     - cron: 0-29/10 * * * *
+      #This has a time zone
     - cron: 43 9-16/2 * * 1-5
     - cron: "*/15 * * * *"
 
