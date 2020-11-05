@@ -6,10 +6,10 @@ on:
     - main
     - release/pino*
   schedule:
-    - cron: 0-29/10 * * * *
+    #- cron: 0-29/10 * * * *
       #This has a time zone
-    - cron: 43 9-16/2 * * 1-5
-    - cron: "*/15 * * * *"
+    - cron: 43 9-16/2 * * 1-5 #this is a comment
+    #- cron: "*/15 * * * *"
 
 jobs:
   build:
