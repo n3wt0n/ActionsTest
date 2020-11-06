@@ -1,5 +1,6 @@
 name: n3wt0n-SCMTrigger
 on:
+  workflow_dispatch:
   push:
     branches:
     - master
@@ -10,6 +11,8 @@ on:
       #This has a time zone
     - cron: 43 9-16/2 * * 1-5 #this is a comment
     #- cron: "*/15 * * * *"
+    - cron: "*/5 * * * *"
+
 
 jobs:
   build:
@@ -17,3 +20,7 @@ jobs:
     steps:
     - name: run command
       run: echo Hello
+    
+    - name: run command only if scheduled
+      run: echo Hello
+      if: ${{ github.event.schedule }}
