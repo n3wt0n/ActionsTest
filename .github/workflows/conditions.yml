@@ -18,4 +18,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Condition - shell
         run: echo This maps a Jenkins Shell Condition
-        if: ${{ echo \"this is executed if it exists\"\ncat \"meow\" }}
+        if: "${{ echo \"this is executed if it exists\"\ncat \"meow\" }}"
