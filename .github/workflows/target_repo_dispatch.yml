@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Print client payload
         run: |
-          echo 'ParamA' is ${{ github.event.client_payload.ParamA }}
+          echo 'ParamA' is ${{ github.event.client_payload.paramA }}
           echo 'boolean' is ${{ github.event.client_payload.boolean }}
 
