@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Print client payload
+        run: |
+          echo 'ParamA' is ${{ github.event.client_payload.ParamA }}
+          echo 'boolean' is ${{ github.event.client_payload.boolean }}
 
