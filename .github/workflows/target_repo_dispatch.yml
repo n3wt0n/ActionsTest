@@ -1,0 +1,14 @@
+name: Target for call from another workflow
+
+on:
+  repository_dispatch:
+    types: [MyCustomEventName] 
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
+
