@@ -12,7 +12,7 @@ jobs:
       uses: peter-evans/repository-dispatch@v1.1.2
       with:
         # A repo scoped GitHub Personal Access Token
-        token: ${secrets.REPO_PAT}
+        token: ${{ secrets.REPO_PAT }}
         # A custom webhook event name.
         event-type: MyCustomEventName
         # JSON payload with extra information about the webhook event that your action or worklow may use.
