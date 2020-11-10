@@ -1,0 +1,19 @@
+name: Call another workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v1.1.2
+      with:
+        # A repo scoped GitHub Personal Access Token
+        token: ${GITHUB_TOKEN}
+        # A custom webhook event name.
+        event-type: MyCustomEventName
+        # JSON payload with extra information about the webhook event that your action or worklow may use.
+        client-payload: "{ paramA : 123, boolean : false }"
