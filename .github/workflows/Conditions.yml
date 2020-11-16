@@ -24,4 +24,4 @@ jobs:
       
       - name: Numbers and vars
         run: echo works with vars
-        if:  arg1 == arg2
+        if:  ${{ env.arg1 == env.arg2 }}
