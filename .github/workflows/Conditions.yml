@@ -28,4 +28,8 @@ jobs:
       
       - name: Numbers and vars
         run: echo works with vars
-        if:  ${{ env.arg1 == env.arg2 }}
+        if:  ${{ env.arg1 == env.arg2 }}    
+
+      - name: Null never run
+        run: echo This won't run
+        if:  ${{ Null == 'bbb' }}
