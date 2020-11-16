@@ -32,4 +32,4 @@ jobs:
 
       - name: Null never run
         run: echo This won't run
-        if:  ${{ Null == 'bbb' }}
+        if:  ${{ null == 'bbb' }}
