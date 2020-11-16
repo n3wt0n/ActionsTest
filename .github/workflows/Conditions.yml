@@ -16,12 +16,12 @@ jobs:
 
       - name: String equality
         run: echo Is ok
-        if: ("aaa" == "aaa")
+        if: ${{ "aaa" == "aaa" }}
 
       - name: String equality case
         run: echo Is this case sensitive?
-        if:  ("aaa" == "AAA")
+        if:  ${{ "aaa" == "AAA" }
       
       - name: Numbers and vars
         run: echo works with vars
-        if:  ($arg1 == $arg2)
+        if:  ${{ $arg1 == $arg2 }
