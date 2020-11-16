@@ -21,6 +21,10 @@ jobs:
       - name: String equality case
         run: echo Is this case sensitive?
         if:  ${{ 'aaa' == 'AAA' }}
+
+      - name: String equality never run
+        run: echo This won't run
+        if:  ${{ 'aaa' == 'bbb' }}
       
       - name: Numbers and vars
         run: echo works with vars
