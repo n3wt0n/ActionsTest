@@ -1,4 +1,4 @@
-name: Conditions
+name: Equality conditions
 
 on:
   workflow_dispatch:
