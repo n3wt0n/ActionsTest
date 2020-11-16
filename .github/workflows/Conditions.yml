@@ -1,0 +1,27 @@
+name: Conditions
+
+on:
+  workflow_dispatch:
+
+env:
+  arg1: 100
+  arg2: 100
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: String equality
+        run: echo Is ok
+        if: ("aaa" == "aaa")
+
+      - name: String equality case
+        run: echo Is this case sensitive?
+        if:  ("aaa" == "AAA")
+      
+      - name: Numbers and vars
+        run: echo works with vars
+        if:  ($arg1 == $arg2)
