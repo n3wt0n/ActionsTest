@@ -1,0 +1,26 @@
+name: Variable concatenation
+
+on:
+  workflow_dispatch:
+
+# Top level and job level environment variables cannot be concatenated.
+# Previously you could use set-env to achieve a similar result but this has been removed for security reasons.
+# We'll use environment files to achieve the result we want.
+# doc-ref: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#environment-files
+
+env:
+  arg1: abc
+  arg2: def
+  # you can't now say arg3: ${{arg1}}${{arg2}} to join these
+  
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: concatenate values to environment file
+        run: |
+          echo "joined=${{env.arg1}}${{env.arg2}}" >> $GITHUB_ENV
+      - name: check environment variable is available
+        run: |
+          echo "${{ env.joined }}"  #should return abcdef
