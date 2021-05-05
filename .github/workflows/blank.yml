@@ -1,0 +1,22 @@
+# This is a basic workflow to showcase creating an Issue
+
+name: Issue - Opener
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Create an issue
+      # You may pin to the exact commit or the version.
+      # uses: JasonEtco/create-an-issue@e6b4b190af80961b6462c725454e7828d0247a68
+      uses: JasonEtco/create-an-issue@v2.4.0
+      with:
+        filename: .github/ISSUE_TEMPLATE_DEPLOYMENT.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ github.RUN_NUMBER }}
