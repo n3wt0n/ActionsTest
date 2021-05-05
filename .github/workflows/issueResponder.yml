@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Issues - Responder
+name: Issue - Responder
 
 # Controls when the action will run. 
 on:
@@ -19,7 +19,7 @@ jobs:
     
       - name: Get Version
         run: |         
-          echo "VERSION=${{ github.event.issue.body }} | grep Version:" >> $GITHUB_ENV
+          echo "VERSION=(${{ github.event.issue.body }} | grep Version:)" >> $GITHUB_ENV
         
       # Runs a single command using the runners shell
       - name: Run a one-line script
