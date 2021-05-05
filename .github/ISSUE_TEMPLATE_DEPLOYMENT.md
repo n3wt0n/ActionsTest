@@ -2,4 +2,4 @@
 title: Depliyment Requested
 labels: deployment
 ---
-Version: {{ VERSION }}
+Version: {{ env.VERSION }}
