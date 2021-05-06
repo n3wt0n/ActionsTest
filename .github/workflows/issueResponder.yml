@@ -19,10 +19,12 @@ jobs:
     
       - name: Get Version
         run: |         
-          echo "VERSION=(${{ github.event.issue.body }} | grep Version:)" >> $GITHUB_ENV
+          $str=(${{ github.event.issue.body }} | grep Version:)
+          echo "VERSION=$str" >> $GITHUB_ENV
         
       # Runs a single command using the runners shell
       - name: Run a one-line script
+        if: contains(github.event.issue.labels, "deployment")
         run: echo Version is ${{ env.VERSION }}
 
       
