@@ -24,7 +24,7 @@ jobs:
         
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        if: contains(github.event.issue.labels, 'deployment')
+        if: contains(github.event.issue.labels.*.name, 'deployment')
         run: echo Version is ${{ github.event.issue.body }}
 
       
