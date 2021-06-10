@@ -1,0 +1,66 @@
+# This is a basic workflow to help you get started with Actions and NuGet Packages
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses:  microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore NuGet Packages
+      run: nuget restore IntegrationSDKs.sln
+
+    - name: Build Solution
+      run: |
+          msbuild IntegrationSDKs.sln /p:platform="Any CPU" /p:configuration="Release" /p:OutputPath="${{github.workspace}}\BuildArtifacts"
+    
+    # At this point, your DLLs will be in the ${{github.workspace}}\BuildArtifacts folder
+    # We need now to copy the nuget.exe and your nuspec file from the folder where they are into the new folder
+    
+    - name: Copy NuGet files
+      run: |
+          cd <FOLDER_THAT_CONTAINS_YOUR_NUGET_FILES>
+          copy nuget.exe ${{github.workspace}}\BuildArtifacts
+          copy <NAME_OF_YOUR_FILE>.nuspec ${{github.workspace}}\BuildArtifacts
+    
+    # Now all the files you need are in that folder. Let's create the nuget package
+    # Your .nuspec file should use "." as folder fore the files to pack (aka your DLLs)
+    # See more info here: https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package
+    - name: Create NuGet Package
+      run: |
+          cd ${{github.workspace}}\BuildArtifacts
+          nuget pack <NAME_OF_YOUR_FILE>.nuspec
+          
+    # Publish NuGet to GitHub Packages
+    # More info here: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry
+    - name: Publish NuGet to GitHub Packages
+      run: |
+        nuget sources add -username ${{ github.repository_owner }} -password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+        nuget setapikey ${{ secrets.GITHUB_TOKEN }} -Source "github"
+        nuget push <NAME_OF_YOUR_PACKAGE>.nupkg -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+   
+   # To consume those packages on another project in another repository:
+   # 1) Create a PAT in GitHub  with "Read Packages" scope
+   # 2) Configure your Project in Visual Studio to use the GitHub Packages to references those DLLs (there are different ways, you can google this :D ) but be sure to use the PAT you;ve just created as a password, not your password
+   # 3) Create a Secret in the Repo where you want to consume those packages (in this example it is called MY_PAT, and save in it the value of the PAT creted above
+   # 4) In GitHub Actions, use this to authenticate to the Packages where you have uploaded (BEFORE THE NUGET RESTORE STEP):
+   # - name: Authenticate to GitHub Packages
+   #   run: |
+   #     nuget sources add -username ${{ github.repository_owner }} -password ${{ secrets.MY_PAT }} --store-password-in-clear-text --name github -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+   #     nuget setapikey ${{ secrets.MY_PAT }} -Source "github"
+        
+        
