@@ -2,9 +2,12 @@
 
 name: GITHUB_TOKEN examples
 
-
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write  
 
 jobs:
   try:
@@ -27,7 +30,12 @@ jobs:
           release_name: ReleaseName
           draft: false
           prerelease: false
-          
+  api:   
+    runs-on: ubuntu-latest  
+    permissions:
+      issues: write
+      packages: 
+    steps:
       - name: Create issue using REST API
         run: |
           curl --request POST \
