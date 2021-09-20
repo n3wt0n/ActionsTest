@@ -10,11 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build the Image
-        run: echo Pretend to build the image
+      - name: Do anything elsee
+        run: echo Pretend to do other things 
 
-      # Uses the Composite Actone
-      - name: Push the image
+      # Uses the Composite Action
+      - name: Build and Push the image
         uses: n3wt0n/CompositeAction@main        
         with:
           registry_username: ${{secrets.REGISTRY_USERNAME}}
