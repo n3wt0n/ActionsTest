@@ -12,6 +12,7 @@ env:
   arg1: abc
   arg2: def
   # you can't now say arg3: ${{arg1}}${{arg2}} to join these
+  arg3: ${{arg1}}${{arg2}}
   
 jobs:
   run:
@@ -24,3 +25,5 @@ jobs:
       - name: check environment variable is available
         run: |
           echo "${{ env.joined }}"  #should return abcdef
+      - name: check on arg 3
+        run: echo "{{env.arg3}}
