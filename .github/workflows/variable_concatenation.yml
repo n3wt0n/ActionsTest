@@ -26,4 +26,4 @@ jobs:
         run: |
           echo "${{ env.joined }}"  #should return abcdef
       - name: check on arg 3
-        run: echo "{{env.arg3}}
+        run: echo "{{env.arg3}}"
