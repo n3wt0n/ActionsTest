@@ -12,7 +12,7 @@ env:
   arg1: abc
   arg2: def
   # you can't now say arg3: ${{arg1}}${{arg2}} to join these
-  arg3: $arg1$arg2
+  arg3: $arg1$arg2 #this won't work
   
 jobs:
   run:
@@ -26,4 +26,5 @@ jobs:
         run: |
           echo "${{ env.joined }}"  #should return abcdef
       - name: check on arg 3
-        run: echo "{{env.arg3}}"
+        run: |
+          echo "${{env.arg3}}" #will return the string $arg1$arg2 instead of the concatenated value
