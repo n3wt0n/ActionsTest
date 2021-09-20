@@ -12,7 +12,7 @@ env:
   arg1: abc
   arg2: def
   # you can't now say arg3: ${{arg1}}${{arg2}} to join these
-  arg3: ${{arg1}}${{arg2}}
+  arg3: ${{env.arg1}}${{env.arg2}}
   
 jobs:
   run:
