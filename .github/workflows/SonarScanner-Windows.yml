@@ -7,7 +7,12 @@ on:
 
 env:
   SONARSCANNER_RELEASE_DOWNLOADURL: https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.3.1.36242/sonar-scanner-msbuild-5.3.1.36242-net46.zip
-
+  SOLUTION_PATH: PATH_OF_YOUR_SLN_FILE
+  SONAR_HOST: URL_OF_YOUR_SONARCLOUD_OR_SONARQUBE_INSTANCE
+  SONAR_PROJECT_KEY: xxx
+  SONAR_PROJECT_NAME: xxx
+  SONAR_PROJECT_VERSION: 1.2.3
+  
 jobs:
   build:
     runs-on: windows-latest
@@ -15,8 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Download SonarScanner
-        run: curl -L -o sonarscanner.zip ${{ env.SONARSCANNER_RELEASE_DOWNLOADURL }}
+      - name: Download and Unzip SonarScanner
+        run: |
+          curl -L -o sonarscanner.zip ${{ env.SONARSCANNER_RELEASE_DOWNLOADURL }}
+          Expand-Archive -Path .\sonarscanner.zip -DestinationPath .\SonarScanner -Verbose
 
-      - name: Unsip the file
-        run: Expand-Archive -Path .\sonarscanner.zip -DestinationPath . -Verbose
+      - name: Run SonarScanner
+        run: |
+          SonarScanner.MSBuild.exe begin /k:"${{ env.SONAR_PROJECT_KEY }}" /n:"{{ env.SONAR_PROJECT_NAME }} /v:"${{ env.SONAR_PROJECT_VERSION }"" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ env.SONAR_HOST }}"
+          MSBuild.exe ${{ env.SOLUTION_PATH}} /t:Rebuild
+          SonarScanner.MSBuild.exe end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
