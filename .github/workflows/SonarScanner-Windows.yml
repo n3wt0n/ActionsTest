@@ -1,0 +1,22 @@
+# This is a basic workflow to ahowcase the installation and usage of SonarQube for MSBuild on WIndows
+
+name: Sonar Scanner
+
+on:
+  workflow_dispatch:
+
+env:
+  SONARSCANNER_RELEASE_DOWNLOADURL: https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.3.1.36242/sonar-scanner-msbuild-5.3.1.36242-net46.zip
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download SonarScanner
+        run: curl -o sonarscanner.zip ${{ env.SONARSCANNER_RELEASE_DOWNLOADURL }}
+
+      - name: Run a multi-line script
+        run: ls
