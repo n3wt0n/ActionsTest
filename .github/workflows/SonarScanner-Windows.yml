@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Download SonarScanner
-        run: curl -o sonarscanner.zip ${{ env.SONARSCANNER_RELEASE_DOWNLOADURL }}
+        run: curl -L -o sonarscanner.zip ${{ env.SONARSCANNER_RELEASE_DOWNLOADURL }}
 
       - name: Unsip the file
         run: Expand-Archive -Path .\sonarscanner.zip -DestinationPath . -Verbose
