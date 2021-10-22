@@ -14,3 +14,6 @@ jobs:
 
       - name: Run a one-line script
         run: echo Hello, world!
+        
+  docker:
+    uses: n3wt0n/ReusableWorkflow/.github/workflows/buildAndPublishDockerImage.yml@main
