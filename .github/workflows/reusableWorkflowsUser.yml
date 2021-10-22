@@ -1,0 +1,16 @@
+# This is a basic workflow to showcase the use of Reusable Workflows
+
+name: Reusable Workflow user
+
+on:
+  workflow_dispatch:
+
+jobs:
+  do-it:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello, world!
