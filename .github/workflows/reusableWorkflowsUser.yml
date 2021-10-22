@@ -18,9 +18,9 @@ jobs:
   docker:
     uses: n3wt0n/ReusableWorkflow/.github/workflows/buildAndPublishDockerImage.yml@main
     with:
-      registry_username: ${{secrets.REGISTRY_USERNAME}}
       image_name: my-awesome-app
       tag: $GITHUB_RUN_NUMBER
     secrets:
+      registry_username: ${{secrets.REGISTRY_USERNAME}}
       registry_password: ${{secrets.REGISTRY_PASSWORD}}
     
