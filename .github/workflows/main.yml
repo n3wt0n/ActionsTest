@@ -13,7 +13,7 @@ jobs:
         with:
           token: ${{ secrets.PSATOKEN }} 
           outputDir:  ${{ github.workspace }}
-          organization: MyVegas
+          organization: playstudios
           # The number of days in the past to check for activity, this will be ignored if 'since' parameter is used.
           activity_days: 90
           
