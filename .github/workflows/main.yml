@@ -1,0 +1,18 @@
+name: Inactive Users
+
+on:
+  workflow_dispatch:
+
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: GitHub Organization User Activity Report
+        uses: peter-murray/inactive-users-action@v1
+        with:
+          token: ${{ secrets.PSATOKEN }} 
+          outputDir:  ${{ github.workspace }}
+          organization: playstudios
+          # The number of days in the past to check for activity, this will be ignored if 'since' parameter is used.
+          activity_days: 90
