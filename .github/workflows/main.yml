@@ -13,6 +13,12 @@ jobs:
         with:
           token: ${{ secrets.PSATOKEN }} 
           outputDir:  ${{ github.workspace }}
-          organization: playstudios
+          organization: MyVegas
           # The number of days in the past to check for activity, this will be ignored if 'since' parameter is used.
           activity_days: 90
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: Report
+          path: ${{ github.workspace }}/organization_user_activity.csv
