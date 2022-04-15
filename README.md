@@ -1,4 +1,4 @@
-# Actions Test 
+# Actions Test 2
 
 Repository used to show different GitHub Actions Features
 
