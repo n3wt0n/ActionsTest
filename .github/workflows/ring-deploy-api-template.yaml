@@ -20,11 +20,11 @@ jobs:
       - run: echo "API - ${{ inputs.tenant-name }}"
         name: Deploy API - ${{ env.app-suffix }}
         env:       
-          app-suffix: ${{ format('XXX-webapi{0}', inputs.tenant-name == 'Shared' && '' || format('-{0}', inputs.tenant-name))}}
+          app-suffix: ${{ format('XXX-webapi{0}', inputs.tenant-name == 'Shared' && 'A' || format('-{0}', inputs.tenant-name))}}
 
       - run: echo "CDN - ${{ inputs.tenant-name }}
         name: Deploy CDN Api - ${{ inputs.tenant-name }}
         env:       
-          app-suffix: ${{ format('XXX-cdn{0}', inputs.tenant-name == 'Shared' && '' || format('-{0}', inputs.tenant-name))}}
+          app-suffix: ${{ format('XXX-cdn{0}', inputs.tenant-name == 'Shared' && 'A' || format('-{0}', inputs.tenant-name))}}
 
           
