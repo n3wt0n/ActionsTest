@@ -17,6 +17,7 @@ jobs:
       tenant-name: ${{inputs.tenant-name}}
   api-deploy:
     uses: ./.github/workflows/ring-deploy-api-template.yaml
+    needs: db-deploy
     with:
       tenant-name: ${{inputs.tenant-name}}
       tenant-url: ${{inputs.tenant-url}}
