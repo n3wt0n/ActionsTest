@@ -46,15 +46,10 @@ jobs:
             
   deploy-shared-cms:
     runs-on: ubuntu-latest
-    if: github.event.deployment.task == 'deploy:github-ring'
     needs: deploy-BB
     environment:
       name:  Ring - Production - Shared CMS
       url: https://myapp.com/
     steps:
-      - uses: playstudios/action-gitops-deploy@v2
-        name: Deploy CMS - Shared
-        with:
-            repo-token: ${{ secrets.REPO_TOKEN }}
-            docker-password: ${{ secrets.DOCKER_PASSWORD }}
-            app-suffix: ava-cms
+      - run: echo "CMS"
+        name: Deploy CMS
