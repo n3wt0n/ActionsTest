@@ -15,10 +15,10 @@
 name: Ring Production Deployment
 on:
   - deployment
+  - workflow_dispatch
 
 jobs:
   deploy-shared-db:
-    if: github.event.deployment.task == 'deploy:github-ring'
     uses: ./.github/workflows/ring-deploy-db-template.yaml
     with:
       tenant-name: Shared
