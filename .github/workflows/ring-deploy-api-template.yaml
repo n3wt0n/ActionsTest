@@ -1,0 +1,30 @@
+name: Template for API deployment
+
+on:
+  workflow_call:
+    inputs:
+      tenant-name:
+        required: true
+        type: string
+      tenant-url:
+        required: true
+        type: string
+
+jobs:
+  api-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name:  Ring - Production - ${{ inputs.tenant-name }} APIs
+      url: ${{ inputs.tenant-url }}
+    steps:
+      - run: echo "API - ${{ inputs.tenant-name }}"
+        name: Deploy API - ${{ env.app-suffix }}
+        env:       
+          app-suffix: ${{ format('XXX-webapi{0}', inputs.tenant-name == 'Shared' && '' || format('-{0}', inputs.tenant-name))}}
+
+      - run: echo "CDN - ${{ inputs.tenant-name }}
+        name: Deploy CDN Api - ${{ inputs.tenant-name }}
+        env:       
+          app-suffix: ${{ format('XXX-cdn{0}', inputs.tenant-name == 'Shared' && '' || format('-{0}', inputs.tenant-name))}}
+
+          

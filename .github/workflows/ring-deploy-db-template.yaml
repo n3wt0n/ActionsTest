@@ -1,0 +1,17 @@
+name: Template for DB deployment
+
+on:
+  workflow_call:
+    inputs:
+      tenant-name:
+        required: true
+        type: string
+
+jobs:
+  db-deploy:
+    runs-on: ubuntu-latest
+    environment:
+        name: Ring - Production - ${{ inputs.tenant-name }} DB
+    steps:
+        - run: echo "DB - ${{ inputs.tenant-name }}"
+          name: Deploy DB - ${{ inputs.tenant-name }}

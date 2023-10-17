@@ -1,0 +1,25 @@
+name: Template for DB+API deployment
+
+on:
+  workflow_call:
+    inputs:
+      tenant-name:
+        required: true
+        type: string
+      tenant-url:
+        required: true
+        type: string
+
+jobs:
+  db-deploy:
+    uses: ./.github/workflows/ring-deploy-db-template.yaml
+    with:
+      tenant-name: ${{inputs.tenant-name}}
+  api-deploy:
+    uses: ./.github/workflows/ring-deploy-api-template.yaml
+    with:
+      tenant-name: ${{inputs.tenant-name}}
+      tenant-url: ${{inputs.tenant-url}}
+  
+
+          

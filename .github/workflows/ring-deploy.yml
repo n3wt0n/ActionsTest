@@ -1,0 +1,60 @@
+# RING DEPLOYMENT EXAMPLE
+# ====================================
+# This workflow will deploy a new version of the application progressively to the production environments
+#
+# Current flow:
+# ------------
+# deploy shared db > approval > deploy shared webapi > deploy shared cdn > approval 
+# > deploy AA db > deploy AA webapi # > deploy AA cdn  > approval > 
+# > deploy BB db > deploy BB webapi # > deploy B cdn  >... > deploy cms
+#
+# We have approval after the Shared DB deploy, but not the others
+# Everything else after Shared deployed “in batch” for each app
+# And Shared CMS as last thing
+
+name: Ring Production Deployment
+on:
+  - deployment
+
+jobs:
+  deploy-shared-db:
+    if: github.event.deployment.task == 'deploy:github-ring'
+    uses: ./.github/workflows/ring-deploy-db-template.yaml
+    with:
+      tenant-name: Shared
+            
+  deploy-shared-api:
+    needs: deploy-shared-db
+    uses: ./.github/workflows/ring-deploy-api-template.yaml
+    with:
+      tenant-name: Shared
+      tenant-url: http://api.myapp.com
+
+  deploy-AA:
+    needs: deploy-shared-api
+    uses: ./.github/workflows/ring-deploy-db+api-template.yaml
+    with:
+      tenant-name: AA
+      tenant-url: http://aa.api.myapp.com
+
+  deploy-BB:
+    needs: deploy-AA
+    uses: ./.github/workflows/ring-deploy-db+api-template.yaml
+    with:
+      tenant-name: BB
+      tenant-url: http://bb.api.myapp.com
+            
+  deploy-shared-cms:
+    runs-on: ubuntu-latest
+    if: github.event.deployment.task == 'deploy:github-ring'
+    needs: deploy-BB
+    environment:
+      name:  Ring - Production - Shared CMS
+      url: https://myapp.com/
+    steps:
+      - uses: playstudios/action-gitops-deploy@v2
+        name: Deploy CMS - Shared
+        with:
+            repo-token: ${{ secrets.REPO_TOKEN }}
+            docker-password: ${{ secrets.DOCKER_PASSWORD }}
+            app-suffix: ava-cms
