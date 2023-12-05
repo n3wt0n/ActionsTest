@@ -1,21 +1,35 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Conditions
+name: Equality conditions
 
 on:
   workflow_dispatch:
-  
+
+env:
+  arg1: 100
+  arg2: 100
+
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: String equality
+        run: echo Is ok
+        if: ${{ 'aaa' == 'aaa' }}
 
-      # Runs a set of commands using the runners shell
-      - name: Condition - shell
-        run: echo This maps a Jenkins Shell Condition
-        if: "${{ echo \"this is executed if it exists\"\ncat \"meow\" }}"
+      - name: String equality case
+        run: echo Is this case sensitive?
+        if:  ${{ 'aaa' == 'AAA' }}
+
+      - name: String equality never run
+        run: echo This won't run
+        if:  ${{ 'aaa' == 'bbb' }}
+      
+      - name: Numbers and vars
+        run: echo works with vars
+        if:  ${{ env.arg1 == env.arg2 }}    
+
+      - name: Null never run
+        run: echo This won't run
+        if:  ${{ null == 'bbb' }}
